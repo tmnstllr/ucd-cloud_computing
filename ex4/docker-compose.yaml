@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3.13-rc-management"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # RabbitMQ management console port
+    networks:
+      - assignment_network
+
+  student:
+    build:
+      context: .
+      dockerfile: Dockerfile_student
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - assignment_network
+
+  demonstrator_dm:
+    build:
+      context: .
+      dockerfile: Dockerfile_demonstrator_dm
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      student:
+        condition: service_started
+    networks:
+      - assignment_network
+
+  demonstrator_cc:
+    build:
+      context: .
+      dockerfile: Dockerfile_demonstrator_cc
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      student:
+        condition: service_started
+    networks:
+      - assignment_network
+
+  teaching_assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile_teaching_assistant
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      student:
+        condition: service_started
+    networks:
+      - assignment_network
+
+  module_coordinator:
+    build:
+      context: .
+      dockerfile: Dockerfile_module_coordinator
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      student:
+        condition: service_started
+    networks:
+      - assignment_network
+
+networks:
+  assignment_network:
