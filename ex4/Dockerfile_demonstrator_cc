@@ -1,18 +1,18 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-  # Set the working directory to /app
+# Set the working directory to /app
 WORKDIR /app
 
-  # Copy the current directory contents into the container at /app
+# Copy the current directory contents into the container at /app
 COPY demonstrator_cc.py .
 COPY requirements.txt .
 
 # Set the environment variable to prevent Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED=1
 
-  # Install any needed packages specified in requirements.txt
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-  # Run main.py when the container launches
+# Run main.py when the container launches
 CMD ["python", "demonstrator_cc.py"]
