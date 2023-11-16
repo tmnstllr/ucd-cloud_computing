@@ -1,11 +1,11 @@
 import json
+import time
 
 import pika
 
 
 class CloudComputingDemonstrator:
     def __init__(self):
-        print("D_CC_1")
         self.module = "cloud_computing"
         self.connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         self.channel = self.connection.channel()
@@ -19,7 +19,6 @@ class CloudComputingDemonstrator:
 
         self.channel.basic_consume(queue=f"{self.module}_queue", on_message_callback=self.callback, auto_ack=True)
         self.start_consuming()
-        print("D_CC_2")
 
     def callback(self, ch, method, properties, body):
         assignment = json.loads(body)
@@ -33,10 +32,9 @@ class CloudComputingDemonstrator:
         )
 
     def start_consuming(self):
-        print("D_CC_3")
-
         print("D_CC: Start consuming messages...")
         self.channel.start_consuming()
 
 
+time.sleep(5)
 CloudComputingDemonstrator()

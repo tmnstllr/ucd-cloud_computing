@@ -1,4 +1,5 @@
 import json
+import time
 
 import pika
 
@@ -26,10 +27,14 @@ class Student:
         self.connection.close()
 
 
+time.sleep(3)
 student_cc = Student(student_id="123")
-student_cc.submit_assignment(module="cloud_computing", answer="CC answer")
-student_cc.close_connection()
-
 student_dm = Student(student_id="456")
+
+time.sleep(5)
+student_cc.submit_assignment(module="cloud_computing", answer="CC answer")
 student_dm.submit_assignment(module="data_mining", answer="DM answer")
+
+time.sleep(3)
+student_cc.close_connection()
 student_dm.close_connection()

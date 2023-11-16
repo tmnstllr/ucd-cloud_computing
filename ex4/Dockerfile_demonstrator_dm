@@ -8,6 +8,9 @@ WORKDIR /app
 COPY demonstrator_dm.py .
 COPY requirements.txt .
 
+# Set the environment variable to prevent Python from buffering stdout and stderr
+ENV PYTHONUNBUFFERED=1
+
   # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 

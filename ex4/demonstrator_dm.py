@@ -1,4 +1,5 @@
 import json
+import time
 
 import pika
 
@@ -35,4 +36,5 @@ class DataMiningDemonstrator:
         self.channel.start_consuming()
 
 
+time.sleep(5)
 DataMiningDemonstrator()

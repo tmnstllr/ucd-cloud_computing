@@ -1,4 +1,5 @@
 import json
+import time
 
 import pika
 
@@ -32,4 +33,5 @@ class TeachingAssistant:
         self.channel.start_consuming()
 
 
+time.sleep(5)
 TeachingAssistant()

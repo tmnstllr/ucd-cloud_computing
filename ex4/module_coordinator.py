@@ -1,4 +1,5 @@
 import json
+import time
 
 import pika
 
@@ -26,4 +27,5 @@ class ModuleCoordinator:
         self.channel.start_consuming()
 
 
+time.sleep(5)
 ModuleCoordinator()
